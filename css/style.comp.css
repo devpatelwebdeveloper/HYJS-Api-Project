@@ -165,6 +165,9 @@ body {
 .u-margin-top-huge {
   margin-top: 10rem !important; }
 
+.hide {
+  display: none; }
+
 .bg-video {
   position: absolute;
   top: 0;

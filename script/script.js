@@ -87,6 +87,7 @@ const apiKeys = {
 app.init = () => {
   $("form").on("submit", function(event) {
     event.preventDefault();
+    $(".section-stories").removeClass("hide");
     const inputVal = $("input").val();
     app.getData(inputVal);
   });

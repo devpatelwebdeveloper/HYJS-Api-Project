@@ -611,6 +611,9 @@ body {
 .u-margin-top-huge {
   margin-top: 10rem !important; }
 
+.hide {
+  display: none; }
+
 .bg-video {
   position: absolute;
   top: 0;
@@ -899,7 +902,7 @@ body {
   color: inherit;
   padding: 1.5rem 2rem;
   border-radius: 2px;
-  background-color: rbga(#fff, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-bottom: 3px solid transparent;
   width: 90%;
@@ -1204,7 +1207,7 @@ body {
     width: calc(3 * ((100% - 3 * 6rem) / 4) + 2 * 6rem); }
 
 .header {
-  height: 85vh;
+  height: 55vh;
   background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero-small.jpg);
   background-size: cover;
   background-position: top;
