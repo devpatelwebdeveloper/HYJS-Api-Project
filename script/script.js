@@ -157,7 +157,7 @@ app.displayStoryContent = data => {
 
 app.localTime = latLong => {
   $.ajax({
-    url: "http://api.timezonedb.com/v2.1/get-time-zone",
+    url: "https://api.timezonedb.com/v2.1/get-time-zone",
     method: "GET",
     dataType: "json",
     data: {
@@ -208,7 +208,7 @@ function formatTime(nowDate) {
 
 app.localWeather = latLong => {
   $.ajax({
-    url: "http://api.openweathermap.org/data/2.5/weather",
+    url: "https://api.openweathermap.org/data/2.5/weather",
     method: "GET",
     dataType: "json",
     data: {
