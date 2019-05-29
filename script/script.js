@@ -170,7 +170,7 @@ app.localTime = latLong => {
     }
   }).then(result => {
     // console.log(result);
-    // console.log(`Formatted: ${result.formatted}`);
+    console.log(`Formatted: ${result.formatted}`);
     // console.log(`Timestamp: ${result.timestamp}`);
 
     const date = new Date(result.formatted);
