@@ -81,7 +81,6 @@ const apiKeys = {
   timeZoneKey: "YF1Y6GS9GOJH",
   weatherKey: "bf082c78bc86302b37089fdff0b1c97d"
 };
-
 // Initialize app
 
 app.init = () => {
@@ -111,6 +110,8 @@ app.getData = addressInput => {
 
     //console log google api result
     console.log(result);
+    //app.filter(result);
+
     //console log google api result ends
 
     app.displayStoryContent(result);
@@ -119,6 +120,44 @@ app.getData = addressInput => {
     // Display Weather of the place
     app.localWeather(result);
   });
+};
+
+app.filter = data => {
+  const arr = data.results[0].address_components;
+  //const filtered = arr.filter(arr => arr.types.includes("locality"));
+  return (cityName = arr.filter(arr => arr.types.includes("locality"))[0]
+    .long_name);
+
+  // Idea of filtering:
+  // const arr = [
+  //   {
+  //      "long_name" : "Brampton",
+  //      "short_name" : "Brampton",
+  //      "types" : [ "locality", "political" ]
+  //   },
+  //   {
+  //      "long_name" : "Regional Municipality of Peel",
+  //      "short_name" : "Regional Municipality of Peel",
+  //      "types" : [ "administrative_area_level_2", "political" ]
+  //   },
+  //   {
+  //      "long_name" : "Ontario",
+  //      "short_name" : "ON",
+  //      "types" : [ "administrative_area_level_1", "political" ]
+  //   },
+  //   {
+  //      "long_name" : "Canada",
+  //      "short_name" : "CA",
+  //      "types" : [ "country", "political" ]
+  //   }
+  // ]
+
+  // const filtered = arr.filter(arr => arr.types.includes('locality'));
+
+  // console.log(filtered);
+  // const cityName = filtered[0].long_name
+
+  // console.log(cityName)
 };
 
 // empty all fields before loading the content
@@ -136,18 +175,11 @@ app.empty = () => {
 
 app.displayStoryContent = data => {
   // console.log(data);
-  const cityName = data.results[0].address_components[3].long_name;
-  const cityName2 = data.results[0].address_components[2].long_name;
-  const cityName3 = data.results[0].address_components[1].long_name;
-
+  const cityName = app.filter(data);
   $(".addressTitle").append(data.results[0].formatted_address);
   // Display Story
   storyData.forEach(stry => {
-    if (
-      cityName.toLowerCase() === stry.location.toLowerCase() ||
-      cityName2.toLowerCase() === stry.location.toLowerCase() ||
-      cityName3.toLowerCase() === stry.location.toLowerCase()
-    ) {
+    if (cityName.toLowerCase() === stry.location.toLowerCase()) {
       $(".story-title").append(stry.title);
       $(".story-content").append(stry.story);
     }
@@ -170,7 +202,7 @@ app.localTime = latLong => {
     }
   }).then(result => {
     // console.log(result);
-    console.log(`Formatted: ${result.formatted}`);
+    //console.log(`Formatted: ${result.formatted}`);
     // console.log(`Timestamp: ${result.timestamp}`);
 
     const date = new Date(result.formatted);
