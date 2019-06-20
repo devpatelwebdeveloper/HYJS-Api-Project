@@ -123,14 +123,14 @@ const storyData = [
 const defaultData = {
   location: "Location Not Found",
   title: "Dummy Title",
-  story: `Brampton is a city in the Canadian province of Ontario. Situated in Southern Ontario, it is a suburban city in the Greater Toronto Area (GTA) and the seat of Peel Region. The city has a population of 593,638 as of the Canada 2016 Census. Brampton is Canada's ninth-most populous municipality, the seventy-seventh largest city in North America and the third most populous city in the Greater Golden Horseshoe Region, behind Toronto and Mississauga.[2]
+  story: `DEVASHSHISH DEVASHISH DEVASHSIH Brampton is a city in the Canadian province of Ontario. Situated in Southern Ontario, it is a suburban city in the Greater Toronto Area (GTA) and the seat of Peel Region. The city has a population of 593,638 as of the Canada 2016 Census. Brampton is Canada's ninth-most populous municipality, the seventy-seventh largest city in North America and the third most populous city in the Greater Golden Horseshoe Region, behind Toronto and Mississauga.[2]
 
   Brampton was incorporated as a village in 1853 with 50 residents, taking its name from the market town of Brampton, in Cumbria, England. In 1873, with 2,000 residents, Brampton was incorporated as a town. The city was once known as "The Flower Town of Canada", a title based on its large greenhouse industry. Today, Brampton's major economic sectors include advanced manufacturing, retail administration, logistics, information, and communication technologies, food and beverage, life sciences, and business services. Mass immigration has greatly increased Brampton's population from 10,000 in the 1950s to over 600,000 today. `,
-  image: {
-    img1: "img/ahmedabad/ahmedabad1.jpg",
-    img2: "img/ahmedabad/ahmedabad1.jpg",
-    img3: "img/ahmedabad/ahmedabad1.jpg"
-  }
+  images: [
+    "img/ahmedabad/ahmedabad1.jpg",
+    "img/ahmedabad/ahmedabad2.png",
+    "img/ahmedabad/ahmedabad3.jpg"
+  ]
 };
 const app = {};
 const apiKeys = {
@@ -182,7 +182,7 @@ app.getData = addressInput => {
 app.filter = data => {
   const arr = data.results[0].address_components;
 
-  return (cityName = arr.filter(arr => arr.types.includes("locality"))[0]
+  return (cityName = arr.filter(arr => arr.types.includes("political"))[0]
     .long_name);
 
   // Idea of filtering:
@@ -231,20 +231,22 @@ app.empty = () => {
 // displaying the data to DOM
 
 app.displayStoryContent = data => {
-  // console.log(data);
   const cityName = app.filter(data);
   $(".addressTitle").append(data.results[0].formatted_address);
-  // Display Story
-  storyData.forEach(stry => {
-    if (cityName.toLowerCase() === stry.location.toLowerCase()) {
-      $(".story-title").append(stry.title);
-      $(".story-content").append(stry.story);
-      // Displaying Images
-      let imgContent = "";
-      stry.images.forEach((imageLink, index) => {
-        return (imgContent =
-          imgContent +
-          `<img
+
+  const result = storyData.filter(
+    location => cityName.toLowerCase() === location.location.toLowerCase()
+  );
+  //displaying the data
+  if (result.length !== 0) {
+    $(".story-title").append(result[0].title);
+    $(".story-content").append(result[0].story);
+    // Displaying Images
+    let imgContent = "";
+    result[0].images.forEach((imageLink, index) => {
+      return (imgContent =
+        imgContent +
+        `<img
           srcset="
             ${imageLink}  300w,
             ${imageLink} 1000w
@@ -254,10 +256,31 @@ app.displayStoryContent = data => {
           class="composition__photo composition__photo--p${index + 1}"
           src="${imageLink}"
         />`);
-      });
-      $(".composition").append(imgContent);
-    }
-  });
+    });
+    $(".composition").append(imgContent);
+  }
+  //Default Data
+  else {
+    $(".story-title").append(defaultData.title);
+    $(".story-content").append(defaultData.story);
+    // Displaying Images
+    let imgContent = "";
+    defaultData.images.forEach((imageLink, index) => {
+      return (imgContent =
+        imgContent +
+        `<img
+          srcset="
+            ${imageLink}  300w,
+            ${imageLink} 1000w
+          "
+          sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, auto"
+          alt="Photo 1"
+          class="composition__photo composition__photo--p${index + 1}"
+          src="${imageLink}"
+        />`);
+    });
+    $(".composition").append(imgContent);
+  }
 };
 
 // Getting Local Time for the searched location and displaying to DOM
