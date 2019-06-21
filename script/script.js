@@ -166,9 +166,7 @@ app.getData = addressInput => {
     //Display Content of Story
 
     //console log google api result
-    console.log(result);
-    //app.filter(result);
-
+    //console.log(result);
     //console log google api result ends
 
     app.displayStoryContent(result);
@@ -179,6 +177,7 @@ app.getData = addressInput => {
   });
 };
 
+// filtering the locality/political name to get the actual name of town
 app.filter = data => {
   const arr = data.results[0].address_components;
 
@@ -226,6 +225,7 @@ app.empty = () => {
   $(".weather-details").empty();
   $(".dateTime-details").empty();
   $(".composition").empty();
+  $(".popup__left").empty();
 };
 
 // displaying the data to DOM
@@ -258,6 +258,10 @@ app.displayStoryContent = data => {
         />`);
     });
     $(".composition").append(imgContent);
+    $(".popup__left").append(`<img src="${
+      result[0].images[0]
+    }" alt="Tour photo" class="popup__img" />
+    <img src="${result[0].images[1]}" alt="Tour photo" class="popup__img" />`);
   }
   //Default Data
   else {
@@ -280,6 +284,12 @@ app.displayStoryContent = data => {
         />`);
     });
     $(".composition").append(imgContent);
+    $(".popup__left").append(`<img src="${
+      defaultData.images[0]
+    }" alt="Tour photo" class="popup__img" />
+    <img src="${
+      defaultData.images[1]
+    }" alt="Tour photo" class="popup__img" />`);
   }
 };
 
@@ -355,10 +365,9 @@ app.localWeather = latLong => {
     weatherDetails.humidity = result.main.humidity;
     weatherDetails.tempMax = result.main.temp_max;
     weatherDetails.tempMin = result.main.temp_min;
-    //console.log(result);
     //Weather Details
-
-    $(".story-title-popup").append(weatherDetails.cityName);
+    //$(".story-title-popup").append(weatherDetails.cityName);
+    $(".story-title-popup").append(cityName);
     $(".weather-details").append(`
     <li><strong>Temperature:</strong><br/>${
       weatherDetails.currentTemp
