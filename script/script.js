@@ -1,3 +1,10 @@
+// Idea here is to search for the story wherevere I have travelled.
+// - Currently I have added some very less Stories for testing purpose and will convert it to json once I add more
+// When you click on the story, currently it produces just the text copied from Wikipedia, and when clicked on read more, it gives the local time and temperature and other details.
+// It also shows the pictures taken, related to that.
+// You can try searching Ahmedabad, Mehsana, Mumbai, Frankfurt, Brampton, Winnipeg, Chicago.
+// If the story is not available, it gives the dummy story not yet created but its in the plan.
+
 const storyData = [
   {
     location: "Ahmedabad",
